@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.hu.tosad</groupId>
-    <artifactId>team5</artifactId>
+	<artifactId>tosad</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>team5 Maven Webapp</name>
+	<name>HBO-ICT: TOSAD</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
@@ -20,9 +20,14 @@
             <artifactId>jersey-container-servlet</artifactId>
             <version>2.25</version>
         </dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180130</version>
+		</dependency>
     </dependencies>
     <build>
-        <finalName>team5</finalName>
+		<finalName>TOSAD</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
@@ -30,7 +35,7 @@
                 <version>2.2</version>
                 <configuration>
                     <server>TomcatServer</server>
-                    <path>/team5</path>
+					<path>/tosad</path>
                     <hostName>localhost</hostName>
                     <port>8080</port>
                 </configuration>
