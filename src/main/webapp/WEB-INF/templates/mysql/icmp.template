@@ -1,0 +1,22 @@
+CREATE OR REPLACE TRIGGER brg_icmp_x##NAME##_##ID##
+	##TIMING## ##ACTION##
+ON ##ENTITY1##
+	##FOREACH##
+BEGIN
+	@V_ATTR = (SELECT ##ATTRIBUTE2## FROM ##ENTITY2## y JOIN ##ENTITY1## x ON ##JOINS##);
+	IF :NEW.##ATTRIBUTE1## ##OPERATOR## @V_ATTR THEN
+		SIGNAL sqlstate '45001' set message_text = 'Constraint violation: negative result for comparison of "##ATTRIBUTE1##" on "##ENTITY1##".';
+	END IF;
+END;
+/
+CREATE OR REPLACE TRIGGER brg_icmp_y##NAME##_##ID##
+	##TIMING## ##ACTION##
+ON ##ENTITY2##
+	##FOREACH##
+BEGIN
+	@V_ATTR = (SELECT ##ATTRIBUTE1## FROM ##ENTITY1## x JOIN ##ENTITY2## y ON ##JOINS##);
+	IF :NEW.##ATTRIBUTE2## ##OPERATOR## @V_ATTR THEN
+		SIGNAL sqlstate '45001' set message_text = 'Constraint violation: negative result for comparison of "##ATTRIBUTE2##" on "##ENTITY2##".';
+	END IF;
+END;
+/
