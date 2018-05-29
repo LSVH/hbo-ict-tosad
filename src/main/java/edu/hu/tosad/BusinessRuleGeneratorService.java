@@ -43,7 +43,7 @@ public class BusinessRuleGeneratorService {
 			dialect);
 
 		ArrayList<Comparison> comparisons = new ArrayList<Comparison>();
-		JSONArray arr = data.getJSONArray("comparisons");
+		JSONArray arr = this.select("comparisons", id).getJSONArray("items");
 		for (int i = 0; i < arr.length(); i++) {
 			comparisons.add(new Comparison(
 				arr.getJSONObject(i).getString("VALUE"),
