@@ -25,7 +25,6 @@ public class BusinessRuleGeneratorService {
 	@Path("/generate/{rule}")
 	public Response generate(@PathParam("rule") String id) {
 		System.out.println("generating: "+id);
-		Response.ResponseBuilder r = Response.status(200);
 
 		JSONObject data = this.select("rule", id);
 
@@ -61,6 +60,8 @@ public class BusinessRuleGeneratorService {
 			db,	comparisons);
 
 		Generator g = new GenerateFromText(rule);
+
+		Response.ResponseBuilder r = Response.status(200);
 
 		try {
 			db.store(g.generate());
