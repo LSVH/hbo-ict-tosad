@@ -46,8 +46,17 @@
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: javax.ws.rs:javax.ws.rs-api:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20180130" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:5.0.8.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.0.8.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-core:5.0.8.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-jcl:5.0.8.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-tx:5.0.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.11" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.protobuf:protobuf-java:2.6.0" level="project" />
-    <orderEntry type="library" name="Maven: com.oracle:ojdbc8:12.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.antlr:stringtemplate:4.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.antlr:antlr-runtime:3.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.6" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.6" level="project" />
   </component>
 </module>
