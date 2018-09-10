@@ -2,6 +2,8 @@ package edu.hu.tosad.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Arrays;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Rule {
     private String slug;
@@ -74,5 +76,18 @@ public class Rule {
             sb.append(comparison.toString());
         }
         return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "slug:'" + slug + '\'' +
+                ", category=" + category +
+                ", ruleType=" + ruleType +
+                ", operator=" + operator +
+                ", table=" + table +
+                ", column=" + column +
+                ", comparisons=" + Arrays.toString(comparisons) +
+                '}';
     }
 }

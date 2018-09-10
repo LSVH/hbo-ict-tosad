@@ -40,4 +40,12 @@ public class Table {
     public void setColumns(Column[] columns) {
         this.columns = columns;
     }
+
+    public boolean hasColumn(String name) {
+        boolean result = false;
+        for (Column column : columns) {
+            result = result || column.getName().equals(name);
+        }
+        return result;
+    }
 }

@@ -76,4 +76,12 @@ public class Database {
     public void setTables(Table[] tables) {
         this.tables = tables;
     }
+
+    public boolean hasTable(String name) {
+        boolean result = false;
+        for (Table table : tables) {
+            result = result || table.getName().equals(name);
+        }
+        return result;
+    }
 }
