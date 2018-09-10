@@ -27,11 +27,12 @@ public class ApexAPI implements APIInterface {
                 .get();
     }
 
-    public void post(String query, String content) {
-        client
+    public String post(String query, String content) {
+        return client
                 .target(REST_URI)
                 .path(query)
                 .request()
-                .post(Entity.json(content));
+                .post(Entity.json(content))
+                .readEntity(String.class);
     }
 }

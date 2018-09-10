@@ -7,6 +7,9 @@ import edu.hu.tosad.util.dao.CategoryDao;
 import edu.hu.tosad.util.dao.CommonDaoImpl;
 import org.json.JSONArray;
 
+import java.util.List;
+import java.util.Map;
+
 public class CategoryDaoImpl extends CommonDaoImpl implements CategoryDao {
     public Category get(int id) {
         return getItem("category/" + Integer.toString(id), Category.class);
@@ -20,8 +23,14 @@ public class CategoryDaoImpl extends CommonDaoImpl implements CategoryDao {
         return getItem("category/" + Integer.toString(id) + "/database", Database.class);
     }
 
-    public void syncTable(int id, String table, JSONArray columns) {
-        api.post("category/" + Integer.toString(id) + "/sync/" + table, columns.toString());
+    public void syncStructure(int id, Map<String, List<String>> structure) {
+        for (Map.Entry<String, List<String>> entry : structure.entrySet()) {
+            JSONArray columns = new JSONArray();
+            for (String column : entry.getValue()) {
+                columns.put(column);
+            }
+            api.post("category/" + Integer.toString(id) + "/sync/" + entry.getKey(), columns.toString());
+        }
     }
 
     public Category[] list() {
