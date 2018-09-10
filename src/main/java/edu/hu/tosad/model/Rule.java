@@ -14,6 +14,9 @@ public class Rule {
     private Column column;
     private Comparison[] comparisons;
 
+    public Rule() {
+    }
+
     public String getSlug() {
         return slug;
     }
