@@ -2,6 +2,7 @@ package edu.hu.tosad;
 
 import edu.hu.tosad.model.*;
 import edu.hu.tosad.model.impl.CategoryDaoImpl;
+import edu.hu.tosad.model.impl.DatabaseDaoImpl;
 import edu.hu.tosad.model.impl.RuleTypeDaoImpl;
 import edu.hu.tosad.model.impl.TableDaoImpl;
 import edu.hu.tosad.util.dao.CategoryDao;
@@ -13,9 +14,7 @@ import edu.hu.tosad.util.db.DatabaseInterface;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -66,11 +65,71 @@ public class DefineBusinessRuleService {
         Table[] tables = categoryDao.getTables(ID);
 
         if (tables == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("No Category found for the ID: " + id).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No Tables found for the category with ID: " + id).build();
         }
 
         JSONObject json = new JSONObject();
         json.put("tables", tables);
+
+        return Response.ok(json.toString(), MediaType.APPLICATION_JSON).build();
+    }
+
+    @GET
+    @Path("/database/{database_ID}/{table_name}")
+    public Response hasTable(@PathParam("database_ID") String id, @PathParam("table_name") String table) {
+        if (id == null || id.trim().length() == 0) {
+            return Response.serverError().entity("Database ID cannot be blank").build();
+        }
+
+        if (table == null || table.trim().length() == 0) {
+            return Response.serverError().entity("Table name cannot be blank").build();
+        }
+
+        CommonDao<Database> databaseDao = new DatabaseDaoImpl();
+        Database database = databaseDao.get(Integer.parseInt(id));
+
+        JSONObject json = new JSONObject();
+        json.put("hasTable", database.hasTable(table));
+
+        return Response.ok(json.toString(), MediaType.APPLICATION_JSON).build();
+    }
+
+    @GET
+    @Path("/table/{table_ID}/columns")
+    public Response tableColumns(@PathParam("table_ID") String id) {
+        if (id == null || id.trim().length() == 0) {
+            return Response.serverError().entity("Table ID cannot be blank").build();
+        }
+
+        TableDao tableDao = new TableDaoImpl();
+        Column[] columns = tableDao.getColumns(Integer.parseInt(id));
+
+        if (columns == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No Columns found for the Table ID: " + id).build();
+        }
+
+        JSONObject json = new JSONObject();
+        json.put("columns", columns);
+
+        return Response.ok(json.toString(), MediaType.APPLICATION_JSON).build();
+    }
+
+    @GET
+    @Path("/table/{table_ID}/{column_name}")
+    public Response hasColumn(@PathParam("table_ID") String id, @PathParam("column_name") String column) {
+        if (id == null || id.trim().length() == 0) {
+            return Response.serverError().entity("Table ID cannot be blank").build();
+        }
+
+        if (column == null || column.trim().length() == 0) {
+            return Response.serverError().entity("Column name cannot be blank").build();
+        }
+
+        CommonDao<Table> tableDao = new TableDaoImpl();
+        Table table = tableDao.get(Integer.parseInt(id));
+
+        JSONObject json = new JSONObject();
+        json.put("hasColumn", table.hasColumn(column));
 
         return Response.ok(json.toString(), MediaType.APPLICATION_JSON).build();
     }
@@ -96,22 +155,31 @@ public class DefineBusinessRuleService {
     }
 
     @GET
-    @Path("/table/{table_ID}/columns")
-    public Response tableColumns(@PathParam("table_ID") String id) {
+    @Path("/ruleType/{rule_type_ID}/{operator_value}")
+    public Response hasOperator(@PathParam("rule_type_ID") String id, @PathParam("operator_value") String operator) {
         if (id == null || id.trim().length() == 0) {
-            return Response.serverError().entity("Table ID cannot be blank").build();
+            return Response.serverError().entity("Rule Type ID cannot be blank").build();
         }
 
-        TableDao tableDao = new TableDaoImpl();
-        Column[] columns = tableDao.getColumns(Integer.parseInt(id));
-
-        if (columns == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("No Columns found for the Table ID: " + id).build();
+        if (operator == null || operator.trim().length() == 0) {
+            return Response.serverError().entity("Operator value cannot be blank").build();
         }
+
+        RuleTypeDao ruleTypeDao = new RuleTypeDaoImpl();
+        RuleType ruleType = ruleTypeDao.get(Integer.parseInt(id));
 
         JSONObject json = new JSONObject();
-        json.put("columns", columns);
+        json.put("hasOperator", ruleType.hasOperator(operator));
 
         return Response.ok(json.toString(), MediaType.APPLICATION_JSON).build();
+    }
+
+    @POST
+    @Path("rule")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response addRule(Rule rule) {
+        System.out.println(rule);
+        return Response.ok(rule.toString(), MediaType.TEXT_PLAIN).build();
     }
 }

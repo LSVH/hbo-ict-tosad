@@ -41,4 +41,11 @@ public class RuleType {
         this.operators = operators;
     }
 
+    public boolean hasOperator(String name) {
+        boolean result = false;
+        for (Operator operator : operators) {
+            result = result || operator.getValue().equals(name);
+        }
+        return result;
+    }
 }
